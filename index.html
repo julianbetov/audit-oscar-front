@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Auditorías</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                        <rect width="50" height="50" rx="10" fill="#FF6B35" />
+                        <path d="M15 25L22 32L35 18" stroke="white" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>Auditorías Corporativas</h1>
+                    <p>Control y seguimiento de procesos de auditoría</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="top-actions">
+                <a href="crear-auditoria.html" class="btn btn-create">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    Crear Nueva Auditoría
+                </a>
+            </div>
+            <div id="content" class="auditorias-container"></div>
+        </main>
+    </div>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                    </svg>
+                    Detalle de Preguntas
+                </h2>
+                <button class="close-button" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-wrapper">
+                    <table id="questionsTable">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Pregunta</th>
+                                <th>Respuesta</th>
+                                <th>Observación</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

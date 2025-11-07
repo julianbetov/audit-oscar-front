@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nueva Auditoría</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="crear-auditoria.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                        <rect width="50" height="50" rx="10" fill="#FF6B35" />
+                        <path d="M15 25L22 32L35 18" stroke="white" stroke-width="4" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>Nueva Auditoría</h1>
+                    <p>Carga las preguntas y completa la auditoría</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="top-actions">
+                <a href="index.html" class="btn btn-back">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12" />
+                        <polyline points="12 19 5 12 12 5" />
+                    </svg>
+                    Volver al Inicio
+                </a>
+            </div>
+
+            <!-- Sección de carga de archivo -->
+            <div id="uploadSection" class="upload-section">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                    </div>
+                    <h2>Cargar Archivo CSV</h2>
+                    <p>Selecciona un archivo CSV con las preguntas de la auditoría</p>
+                    <p class="file-info">Una pregunta por fila</p>
+
+                    <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+
+                    <div id="uploadButtonContainer">
+                        <button class="btn btn-upload" onclick="document.getElementById('csvFileInput').click()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Seleccionar Archivo
+                        </button>
+                    </div>
+
+                    <div id="fileStatus" class="file-status"></div>
+                </div>
+            </div>
+
+            <!-- Sección de preguntas -->
+            <div id="questionsSection" class="questions-section" style="display: none;">
+                <div class="questions-header">
+                    <h2 id="questionsTitle">Preguntas Cargadas</h2>
+                    <button class="btn btn-primary btn-large" onclick="startAudit()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 11l3 3L22 4" />
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                        </svg>
+                        <span id="startButtonText">Responder preguntas</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulario de auditoría -->
+            <div id="auditForm" class="audit-form" style="display: none;">
+                <div class="form-header">
+                    <h2>Completar Auditoría</h2>
+                    <div class="progress-info">
+                        <span id="progressText">0 de 0 preguntas completadas</span>
+                    </div>
+                </div>
+
+                <div id="questionsCards" class="questions-cards"></div>
+
+                <div class="form-actions">
+                    <button class="btn btn-submit" onclick="submitAudit()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Enviar Resultados
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="crear-auditoria.js"></script>
+</body>
+
+</html>
