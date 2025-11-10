@@ -367,7 +367,7 @@ async function startAnalysis(auditId) {
         console.log("Iniciando análisis para auditoría ID:", auditId);
 
         const response = await fetch(
-            `http://localhost:8000/analisis?auditoriaId=${auditId}`,
+            `http://localhost:8000/analisis?auditoria_id=${auditId}`,
             {
                 method: "POST"
             }

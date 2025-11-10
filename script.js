@@ -57,7 +57,9 @@ function renderCards(data) {
         card.className = 'auditoria-card';
         card.innerHTML = `
             <div class="card-header">
-                <span class="card-number-badge">AUDITORÍA #${String(index + 1).padStart(3, '0')}</span>
+                <span class="card-number-badge">AUDITORÍA #${String(
+                    index + 1
+                ).padStart(3, "0")}</span>
                 <h3 class="card-title">ID: ${auditoria.id}</h3>
                 <div class="card-date">
                     ${createCalendarIcon()}
@@ -68,12 +70,16 @@ function renderCards(data) {
                 <div class="info-grid">
                     <div class="info-row">
                         <span class="info-label">Total de Preguntas</span>
-                        <span class="info-value">${auditoria.totalDeRegistros}</span>
+                        <span class="info-value">${
+                            auditoria.totalDeRegistros
+                        }</span>
                     </div>
                 </div>
             </div>
             <div class="card-actions">
-                <button class="btn btn-secondary" onclick="viewReport(${auditoria.id})">
+                <button class="btn btn-secondary" onclick="downloadReport(${
+                    auditoria.id
+                })">
                     ${createFileIcon()}
                     Ver Reporte
                 </button>
@@ -85,6 +91,54 @@ function renderCards(data) {
         `;
         content.appendChild(card);
     });
+}
+
+async function downloadReport(auditId) {
+
+    try {
+        console.log("Descargando reporte para auditoría ID:", auditId);
+
+        const response = await fetch(
+            `http://localhost:8081/archivo/${auditId}`,
+            {
+                method: "GET",
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const analysisData = await response.json();
+        console.log(response);
+        console.log("Datos del archivo recibidos");
+
+        if (!analysisData.pdfBytes) {
+            throw new Error("No se recibieron datos del PDF");
+        }
+
+        let pdfData = analysisData.pdfBytes;
+
+        if (typeof pdfData === "string") {
+            pdfData = pdfData.replace(/^data:application\/pdf;base64,/, "");
+
+            const binaryString = atob(pdfData);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            pdfData = bytes;
+        }
+
+        const blob = new Blob([pdfData], { type: "application/pdf" });
+        const pdfUrl = URL.createObjectURL(blob);
+
+        window.open(pdfUrl, "_blank");
+
+    } catch (error) {
+        console.error("Error al descargar el reporte:", error);
+        alert("Error al descargar el reporte:\n\n" + error.message);
+    }
 }
 
 function showQuestions(index) {
