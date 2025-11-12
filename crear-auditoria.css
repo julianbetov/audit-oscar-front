@@ -158,6 +158,60 @@
     font-weight: 600;
 }
 
+/* Observaciones Generales Card */
+.general-observations-card {
+    background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 2px solid #4F46E5;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.general-observations-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(79, 70, 229, 0.3);
+}
+
+.general-observations-header {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+    padding: 25px 30px;
+    border-bottom: 2px solid #4F46E5;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.general-observations-header svg {
+    color: #818CF8;
+    min-width: 24px;
+}
+
+.general-observations-header h3 {
+    color: #ffffff;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin: 0;
+}
+
+.general-observations-body {
+    padding: 30px;
+}
+
+.character-count {
+    color: #94a3b8;
+    font-size: 0.85em;
+    margin-top: 8px;
+    text-align: right;
+}
+
+.character-count span {
+    font-weight: 600;
+    color: #4F46E5;
+}
+
 .questions-cards {
     display: grid;
     gap: 25px;
@@ -243,6 +297,12 @@
     transition: all 0.3s ease;
 }
 
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
@@ -266,13 +326,9 @@
     color: #e2e8f0;
 }
 
-.form-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
 .form-input.error,
-.form-select.error {
+.form-select.error,
+.form-textarea.error {
     border-color: #EF4444;
 }
 
@@ -434,6 +490,26 @@
     margin-top: 20px;
 }
 
+.error-state {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.error-state h3 {
+    font-size: 1.8em;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.error-state p {
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
 @media (max-width: 768px) {
     .upload-card {
         padding: 40px 20px;
@@ -447,5 +523,13 @@
 
     .form-header h2 {
         font-size: 1.5em;
+    }
+
+    .general-observations-header h3 {
+        font-size: 1.1em;
+    }
+
+    .form-textarea {
+        min-height: 100px;
     }
 }

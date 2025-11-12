@@ -1,4 +1,5 @@
 let questions = [];
+let generalObservations = "";
 
 document
     .getElementById("csvFileInput")
@@ -33,7 +34,6 @@ document
                         );
                     }
 
-                    // Ocultar el botón de subir archivo y mostrar el botón de llenar formulario
                     document.getElementById(
                         "uploadButtonContainer"
                     ).style.display = "none";
@@ -47,7 +47,6 @@ document
                 `;
                     fileStatus.className = "file-status success";
 
-                    // Agregar botón para llenar formulario
                     const buttonHtml = `
                     <button class="btn btn-upload" style="margin-top: 20px;" onclick="startAudit()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -106,6 +105,20 @@ function startAudit() {
 
     renderQuestionCards();
     updateProgress();
+
+    // Inicializar contador de caracteres
+    const textarea = document.getElementById("generalObservations");
+    textarea.addEventListener("input", function () {
+        updateCharacterCount(this.value.length);
+    });
+}
+
+function updateGeneralObservations(value) {
+    generalObservations = value;
+}
+
+function updateCharacterCount(count) {
+    document.getElementById("charCount").textContent = count;
 }
 
 function renderQuestionCards() {
@@ -164,17 +177,19 @@ function renderQuestionCards() {
                 </div>
 
                 <div class="form-group">
-                    <label for="observacion-${question.id}">Observación</label>
-                    <input 
-                        type="text" 
+                    <label for="observacion-${
+                        question.id
+                    }">Observación Específica</label>
+                    <textarea 
                         id="observacion-${question.id}" 
-                        class="form-input"
-                        placeholder="Ingrese observaciones adicionales (opcional)"
+                        class="form-textarea"
+                        placeholder="Ingrese observaciones específicas para esta pregunta (opcional)"
+                        rows="4"
                         data-question-id="${question.id}"
                         onchange="updateQuestion(${
                             question.id
                         }, 'observacion', this.value)"
-                    >
+                    ></textarea>
                 </div>
             </div>
         `;
@@ -273,16 +288,19 @@ async function sendAuditData() {
         Enviando...
     `;
 
-    // Ocultar las tarjetas de preguntas
     document.getElementById("questionsCards").style.display = "none";
+    document.getElementById("generalObservationsCard").style.display = "none";
     document.querySelector(".form-header").style.display = "none";
 
     try {
-        const payload = questions.map((q) => ({
-            pregunta: q.pregunta,
-            respuesta: q.respuesta,
-            observacion: q.observacion || "",
-        }));
+        const payload = {
+            observaciones_generales: generalObservations,
+            preguntas: questions.map((q) => ({
+                pregunta: q.pregunta,
+                respuesta: q.respuesta,
+                observacion: q.observacion || "",
+            })),
+        };
 
         console.log("Enviando datos:", payload);
 
@@ -311,8 +329,9 @@ async function sendAuditData() {
         console.error("Error:", error);
         alert("Error al enviar la auditoría:\n\n" + error.message);
 
-        // Restaurar las tarjetas en caso de error
         document.getElementById("questionsCards").style.display = "grid";
+        document.getElementById("generalObservationsCard").style.display =
+            "block";
         document.querySelector(".form-header").style.display = "block";
 
         submitBtn.disabled = false;
@@ -367,9 +386,9 @@ async function startAnalysis(auditId) {
         console.log("Iniciando análisis para auditoría ID:", auditId);
 
         const response = await fetch(
-            `http://localhost:8000/analisis?auditoria_id=${auditId}`,
+            `http://localhost:8001/analisis?auditoria_id=${auditId}`,
             {
-                method: "POST"
+                method: "POST",
             }
         );
 
